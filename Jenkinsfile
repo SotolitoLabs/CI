@@ -1,45 +1,23 @@
-                sh "docker exec ${pid} chef exec rspec --color -fd"
+pipeline {
+   agent { node { label 'test' } }
+
+   stages {
+      stage('Spin Up') {
+         steps {
+             sh 'docker-compose up -d'
+         }
+      }
+      stage('Start nginx') {
+         steps {
+             script {
+                sh "echo 'Hello from inside of the container'" 
              }
          }
       }
-      stage('Kitchen Create') {
+      stage('Do something') {
          steps {
              script {
-                def pid=readFile('pid').trim()
-                sh "docker exec ${pid} kitchen create"
-             }
-         }
-      }
-      stage('Kitchen Converge') {
-         steps {
-             script {
-                def pid=readFile('pid').trim()
-                sh "docker exec ${pid} kitchen converge"
-             }
-         }
-      }
-      stage('Kitchen Setup') {
-         steps {
-             script {
-                def pid=readFile('pid').trim()
-                sh "docker exec ${pid} kitchen setup"
-             }
-         }
-      }
-      stage('Kitchen Exec Test') {
-         steps {
-             script {
-                def pid=readFile('pid').trim()
-                sh "docker exec ${pid} kitchen verify"
-             }
-         }
-      }
-      stage('Kitchen clean up') {
-         steps {
-             script {
-                def pid=readFile('pid').trim()
-                sh "docker exec ${pid} kitchen destroy"
-                sh "docker-compose down"
+                sh "echo 'I will do something else and shutup'"
              }
          }
       }
