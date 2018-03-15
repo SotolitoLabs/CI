@@ -58,3 +58,8 @@ Domain creation completed.
 You can restart your domain by running:
   virsh --connect qemu:///system start Fedora-Server-armhfp-27
 
+
+### Install Jenkins pre-requisites
+
+TBD
+
