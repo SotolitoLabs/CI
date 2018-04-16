@@ -52,11 +52,59 @@ sudo virt-install \
 ```
 
 
-### Reconnect to VM
+### VM Operations
 
 Domain creation completed.
 You can restart your domain by running:
   virsh --connect qemu:///system start Fedora-Server-armhfp-27
+
+
+Alternatively, you can first check which machines are available in your domain
+
+```
+sudo virsh list --all
+```
+Then start it manually
+ 
+```
+sudo virsh start Fedora-Server-armhfp-27
+```
+
+To connect to the VM's console :
+
+```
+sudo virsh console Fedora-Server-armhfp-27
+```
+To exit the console use Shift+Ctrl+]
+
+
+or via SSH, you need to determine which machine number your VM is within the domain
+
+```
+$ sudo virsh list
+ Id    Name                           State
+----------------------------------------------------
+ 1     Fedora-Server-armhfp-27        running
+
+ $ sudo virsh domifaddr 1
+ Name       MAC address          Protocol     Address
+-------------------------------------------------------------------------------
+ vnet0      52:54:00:79:30:57    ipv4         192.168.122.170/24
+```
+
+
+ Then just ssh using the host's ip returned address 
+
+
+
+
+Finally, to shut it down
+
+```
+sudo virsh shutdown Fedora-Server-armhfp-27
+```
+
+
 
 
 ### Install Jenkins pre-requisites
